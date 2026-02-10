@@ -5,65 +5,172 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Robo Al Ain | Fresh Market</title>
   <style>
-    *{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#f8fafc;color:#0f172a}
-    .top{background:#45b649;color:#fff;padding:10px 18px;font-size:14px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
-    .nav{background:#fff;padding:14px 18px;border-bottom:1px solid #e2e8f0;position:sticky;top:0}
-    .row{display:flex;align-items:center;gap:12px;max-width:1200px;margin:auto}
-    .brand{font-size:32px;font-weight:700;color:#16a34a}
-    .search{flex:1;background:#eef2f7;border-radius:999px;padding:12px 16px;color:#64748b}
-    .cart{background:#f97316;color:#fff;border:none;padding:12px 18px;border-radius:999px;font-weight:700}
-    .menu{max-width:1200px;margin:12px auto 0;display:flex;gap:20px;font-weight:700;color:#1e293b;flex-wrap:wrap}
-    .hero{max-width:1200px;margin:24px auto;padding:0 18px;display:grid;grid-template-columns:1.1fr 1fr;gap:30px}
-    .pill{display:inline-block;background:#fff2e8;color:#f97316;padding:10px 14px;border-radius:999px;font-weight:700}
-    h1{font-size:58px;line-height:1.05;margin:18px 0} h1 span{color:#16a34a}
-    .cta{display:flex;gap:14px;margin-top:18px;flex-wrap:wrap}.btn{padding:12px 20px;border-radius:999px;border:1px solid #16a34a;font-weight:700}
-    .btn.primary{background:#16a34a;color:#fff}.btn.alt{color:#f97316;border-color:#f97316;background:#fff}
-    .heroimg{width:100%;height:460px;border-radius:24px;object-fit:cover}
-    .sec{max-width:1200px;margin:28px auto;padding:0 18px}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f4f6f8;color:#0f172a}
+    a{text-decoration:none;color:inherit}
+    .container{max-width:1240px;margin:0 auto;padding:0 18px}
+    .top{background:#45b649;color:#fff;font-size:16px}
+    .top .container{display:flex;justify-content:space-between;gap:16px;padding:12px 18px;flex-wrap:wrap}
+    .bar{background:#fff;border-bottom:1px solid #e2e8f0;position:sticky;top:0;z-index:20}
+    .bar-main{display:flex;align-items:center;gap:16px;padding:14px 0}
+    .logo{display:flex;align-items:center;gap:12px;min-width:230px}
+    .logo-badge{width:56px;height:56px;border:2px solid #45b649;border-radius:12px;display:grid;place-items:center;background:#f0fff4;font-size:28px}
+    .logo h1{margin:0;font-size:42px;line-height:1;color:#111827}
+    .logo p{margin:4px 0 0;color:#64748b;font-size:28px}
+    .search{flex:1;background:#edf2ed;border-radius:999px;padding:15px 22px;color:#64748b;font-size:34px}
+    .lang{font-weight:700;font-size:34px}
+    .cart{background:#f97316;color:#fff;border:0;border-radius:999px;padding:12px 20px;font-weight:700;font-size:30px}
+    .menu{display:flex;gap:30px;font-weight:700;padding:14px 0;color:#1f2937;font-size:32px;overflow:auto;white-space:nowrap}
+
+    .hero{background:#fff;padding:26px 0}
+    .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:34px;align-items:center}
+    .offer{display:inline-block;background:#fff2e8;color:#f97316;border:1px solid #ffd6bd;border-radius:999px;padding:11px 18px;font-weight:700;font-size:26px}
+    .hero h2{font-size:92px;line-height:1.04;margin:22px 0 12px}
+    .hero h2 span{color:#45b649}
+    .hero p{color:#64748b;font-size:42px;line-height:1.45;margin:0}
+    .cta{display:flex;gap:16px;margin-top:24px;flex-wrap:wrap}
+    .btn{border:1px solid #cbd5e1;background:#fff;border-radius:999px;padding:14px 26px;font-size:34px;font-weight:700}
+    .btn.primary{background:#45b649;border-color:#45b649;color:#fff}
+    .btn.alt{border-color:#f7b28a;color:#f97316;background:#fff7f1}
+    .heroimg{position:relative}
+    .heroimg img{width:100%;height:640px;object-fit:cover;border-radius:28px}
+    .tag{position:absolute;left:18px;bottom:18px;background:#f97316;color:#fff;border-radius:20px;padding:16px 20px;font-weight:800;font-size:30px}
+
+    .section{padding:28px 0}
+    .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+    .head h3{margin:0;font-size:56px}
+    .head a{color:#45b649;font-weight:700;font-size:28px}
+
+    .cats{display:grid;grid-template-columns:repeat(9,minmax(120px,1fr));gap:12px}
+    .cat{background:#fff;border:1px solid #e6ebf0;border-radius:14px;padding:12px;text-align:center}
+    .cat img{width:76px;height:76px;border-radius:50%;object-fit:cover;display:block;margin:0 auto 10px}
+    .cat b{font-size:24px;display:block}
+    .cat small{color:#64748b;font-size:20px}
+
+    .deals-wrap{background:#e8e8e8;padding:24px 0}
+    .deal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+    .deal-title{display:flex;align-items:center;gap:12px}
+    .deal-title h4{margin:0;font-size:56px}
+    .deal-title p{margin:6px 0 0;color:#64748b;font-size:28px}
+    .timer{background:#fff;border-radius:999px;padding:10px 16px;font-weight:700;font-size:24px}
     .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
-    .card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden}
-    .card img{width:100%;height:180px;object-fit:cover}.card .p{padding:12px}
-    .price{font-size:26px;color:#16a34a;font-weight:700}
-    .footer{background:#0b1f50;color:#fff;padding:26px 18px;margin-top:40px}
-    @media(max-width:900px){.hero{grid-template-columns:1fr} h1{font-size:42px} .cards{grid-template-columns:repeat(2,1fr)}}
+    .card{background:#fff;border-radius:14px;overflow:hidden;border:1px solid #dbe1e8}
+    .card .img{position:relative}
+    .card .img img{width:100%;height:260px;object-fit:cover}
+    .disc{position:absolute;top:8px;left:8px;background:#f97316;color:#fff;font-size:16px;font-weight:800;padding:5px 8px;border-radius:8px}
+    .card .info{padding:12px}
+    .type{color:#64748b;text-transform:uppercase;font-size:16px}
+    .name{font-size:34px;font-weight:700;margin:6px 0}
+    .meta{color:#64748b;font-size:22px}
+    .price{margin-top:8px}
+    .price b{color:#45b649;font-size:40px}
+    .price s{color:#64748b;margin-left:6px;font-size:24px}
+    .add{margin-top:10px;background:#45b649;color:#fff;border:0;width:100%;padding:10px;border-radius:9px;font-weight:700;font-size:22px}
+
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+    .chip{border:1px solid #cfd8e3;background:#fff;border-radius:999px;padding:8px 14px;font-size:20px}
+    .chip.active{background:#45b649;border-color:#45b649;color:#fff}
+    .products{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+
+    .newsletter{background:#45b649;color:#fff;padding:26px 0;margin-top:24px}
+    .newsletter .container{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+    .newsletter h5{margin:0;font-size:40px}
+    .newsletter p{margin:4px 0 0;font-size:24px}
+    .sub{display:flex;gap:10px;flex-wrap:wrap}
+    .sub input{border:0;border-radius:999px;padding:12px 16px;min-width:340px;font-size:20px}
+    .sub button{border:0;background:#f97316;color:#fff;padding:12px 20px;border-radius:999px;font-weight:700;font-size:20px}
+
+    .footer{background:#081d4b;color:#fff;padding:32px 0 0}
+    .footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.1fr;gap:20px;padding-bottom:26px}
+    .footer h6{margin:0 0 10px;font-size:36px}
+    .footer p,.footer li{margin:0 0 8px;color:#d8e0f0;font-size:22px;list-style:none}
+    .copyright{border-top:1px solid rgba(255,255,255,.2);padding:14px 0;color:#d8e0f0;font-size:18px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+    @media (max-width:1100px){
+      .hero-grid{grid-template-columns:1fr}.cats{grid-template-columns:repeat(3,1fr)}.cards{grid-template-columns:repeat(2,1fr)}.products{grid-template-columns:repeat(2,1fr)}
+      .logo h1{font-size:28px}.logo p,.search,.lang,.cart,.menu,.hero p{font-size:18px}.hero h2{font-size:48px}
+      .head h3,.deal-title h4{font-size:34px}.footer-grid{grid-template-columns:1fr 1fr}
+    }
   </style>
 </head>
 <body>
-  <div class="top"><div>🚚 Free Delivery on Orders Over 100 AED</div><div>Customer Service: +971 3 123 4567</div></div>
-  <header class="nav">
-    <div class="row">
-      <div class="brand">Robo Al Ain</div>
-      <div class="search">Search from over 1000+ products...</div>
-      <button class="cart">🛒 0</button>
+  <div class="top"><div class="container"><span>🚚 Free Delivery on Orders Over 100 AED &nbsp;&nbsp; 📍 Delivering to Al Ain, UAE</span><span>Customer Service: +971 3 123 4567 &nbsp;&nbsp; العربية</span></div></div>
+
+  <header class="bar">
+    <div class="container">
+      <div class="bar-main">
+        <div class="logo"><div class="logo-badge">🛒</div><div><h1>Robo Al Ain</h1><p>Fresh Market</p></div></div>
+        <div class="search">🔎 Search from over 1000+ products...</div>
+        <div class="lang">العربية</div>
+        <button class="cart">🛒 0</button>
+      </div>
+      <nav class="menu"><a>Home</a><a>Fresh</a><a>Dairy & Eggs</a><a>Meat & Poultry</a><a>Seafood</a><a>Bakery</a><a>Beverages</a><a>Snacks</a><a>Frozen</a><a>Deals</a></nav>
     </div>
-    <div class="menu"><span>Home</span><span>Fresh</span><span>Dairy & Eggs</span><span>Bakery</span><span>Deals</span><span>Contact</span></div>
   </header>
 
   <section class="hero">
-    <div>
-      <span class="pill">% Up to 30% OFF on Fresh Produce</span>
-      <h1>Fresh Groceries<br><span>Delivered to Your Door</span></h1>
-      <p>Shop from 1000+ quality products. Fresh fruits, vegetables, dairy, meat & more with same-day delivery in Al Ain.</p>
-      <div class="cta"><button class="btn primary">Start Shopping</button><button class="btn alt">View Today's Deals</button></div>
-    </div>
-    <img class="heroimg" src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1400&q=80" alt="grocery"/>
-  </section>
-
-  <section class="sec">
-    <h2>Today's Hot Deals</h2>
-    <div class="cards">
-      <article class="card"><img src="https://images.unsplash.com/photo-1582979512210-99b6a53386f9?auto=format&fit=crop&w=800&q=80"><div class="p"><strong>Sweet Oranges</strong><div class="price">8.99 AED</div></div></article>
-      <article class="card"><img src="https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"><div class="p"><strong>Ripe Mangoes</strong><div class="price">24.99 AED</div></div></article>
-      <article class="card"><img src="https://images.unsplash.com/photo-1546470427-e5ac89cd0b51?auto=format&fit=crop&w=800&q=80"><div class="p"><strong>Fresh Tomatoes</strong><div class="price">5.49 AED</div></div></article>
-      <article class="card"><img src="https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=800&q=80"><div class="p"><strong>Bell Peppers Mix</strong><div class="price">9.99 AED</div></div></article>
+    <div class="container hero-grid">
+      <div>
+        <span class="offer">% Up to 30% OFF on Fresh Produce</span>
+        <h2>Fresh Groceries<br><span>Delivered to Your Door</span></h2>
+        <p>Shop from 1000+ quality products. Fresh fruits, vegetables, dairy, meat & more with same-day delivery in Al Ain.</p>
+        <div class="cta"><button class="btn primary">Start Shopping →</button><button class="btn alt">View Today's Deals</button></div>
+      </div>
+      <div class="heroimg"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1400&q=80" alt="Fresh vegetables"><div class="tag">30% OFF<br><span style="font-size:22px;font-weight:500">Fresh Picks</span></div></div>
     </div>
   </section>
 
-  <footer class="footer">
-    <div style="max-width:1200px;margin:auto;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
-      <span>© 2024 Robo Al Ain. All rights reserved.</span>
-      <span>orders@roboalain.ae</span>
+  <section class="section">
+    <div class="container">
+      <div class="head"><h3>Shop by Category</h3><a href="#">View All →</a></div>
+      <div class="cats">
+        <div class="cat"><img src="https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=200&q=80"><b>Fresh</b><small>265 items</small></div>
+        <div class="cat"><img src="https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=200&q=80"><b>Dairy & Eggs</b><small>85 items</small></div>
+        <div class="cat"><img src="https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=200&q=80"><b>Bakery</b><small>65 items</small></div>
+        <div class="cat"><img src="https://images.unsplash.com/photo-1579631542720-3a87824fff86?auto=format&fit=crop&w=200&q=80"><b>Seafood</b><small>78 items</small></div>
+        <div class="cat"><img src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=200&q=80"><b>Meat</b><small>92 items</small></div>
+        <div class="cat"><img src="https://images.unsplash.com/photo-1551024709-8f23befc6cf7?auto=format&fit=crop&w=200&q=80"><b>Beverages</b><small>110 items</small></div>
+        <div class="cat"><img src="https://images.unsplash.com/photo-1529472119196-cb724127a98e?auto=format&fit=crop&w=200&q=80"><b>Frozen</b><small>88 items</small></div>
+        <div class="cat"><img src="https://images.unsplash.com/photo-1599490659213-e2b9527bd087?auto=format&fit=crop&w=200&q=80"><b>Snacks</b><small>134 items</small></div>
+        <div class="cat"><img src="https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=200&q=80"><b>Deals</b><small>56 items</small></div>
+      </div>
     </div>
-  </footer>
+  </section>
+
+  <section class="deals-wrap">
+    <div class="container">
+      <div class="deal-head"><div class="deal-title"><div style="font-size:34px">🔥</div><div><h4>Today's Hot Deals</h4><p>Limited time offers - Don't miss out!</p></div></div><div class="timer">⏱ Ends in: 12:45:30</div></div>
+      <div class="cards">
+        <article class="card"><div class="img"><img src="https://images.unsplash.com/photo-1582979512210-99b6a53386f9?auto=format&fit=crop&w=900&q=80"><span class="disc">25% OFF</span></div><div class="info"><div class="type">Fresh</div><div class="name">Sweet Oranges</div><div class="meta">⭐ 4.7 • 1 kg</div><div class="price"><b>8.99 AED</b><s>11.99</s></div><button class="add">Add to Cart</button></div></article>
+        <article class="card"><div class="img"><img src="https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=900&q=80"><span class="disc">17% OFF</span></div><div class="info"><div class="type">Fresh</div><div class="name">Ripe Mangoes</div><div class="meta">⭐ 4.8 • 1 kg</div><div class="price"><b>24.99 AED</b><s>29.99</s></div><button class="add">Add to Cart</button></div></article>
+        <article class="card"><div class="img"><img src="https://images.unsplash.com/photo-1546470427-e5ac89cd0b51?auto=format&fit=crop&w=900&q=80"><span class="disc">31% OFF</span></div><div class="info"><div class="type">Fresh</div><div class="name">Fresh Tomatoes</div><div class="meta">⭐ 4.6 • 1 kg</div><div class="price"><b>5.49 AED</b><s>7.99</s></div><button class="add">Add to Cart</button></div></article>
+        <article class="card"><div class="img"><img src="https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=900&q=80"><span class="disc">23% OFF</span></div><div class="info"><div class="type">Fresh</div><div class="name">Bell Peppers Mix</div><div class="meta">⭐ 4.6 • 500g</div><div class="price"><b>9.99 AED</b><s>12.99</s></div><button class="add">Add to Cart</button></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="head"><h3>Popular Products</h3></div>
+      <div class="chips"><span class="chip active">All</span><span class="chip">Fresh</span><span class="chip">Dairy</span><span class="chip">Meat</span><span class="chip">Seafood</span><span class="chip">Bakery</span><span class="chip">Beverages</span><span class="chip">Snacks</span><span class="chip">Frozen</span><span class="chip">Deals</span></div>
+      <div class="products">
+        <article class="card"><div class="img"><img src="https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=900&q=80"><span class="disc">19% OFF</span></div><div class="info"><div class="type">Fresh</div><div class="name">Organic Red Apples</div><div class="meta">⭐ 4.8 • 1 kg</div><div class="price"><b>12.99 AED</b><s>15.99</s></div><button class="add" style="background:#cbd5e1;color:#334155">Out of Stock</button></div></article>
+        <article class="card"><div class="img"><img src="https://images.unsplash.com/photo-1603833665858-e61d17a86224?auto=format&fit=crop&w=900&q=80"></div><div class="info"><div class="type">Fresh</div><div class="name">Fresh Bananas</div><div class="meta">⭐ 4.6 • 1 kg</div><div class="price"><b>6.49 AED</b></div><button class="add">Add to Cart</button></div></article>
+        <article class="card"><div class="img"><img src="https://images.unsplash.com/photo-1582979512210-99b6a53386f9?auto=format&fit=crop&w=900&q=80"><span class="disc">25% OFF</span></div><div class="info"><div class="type">Fresh</div><div class="name">Sweet Oranges</div><div class="meta">⭐ 4.7 • 1 kg</div><div class="price"><b>8.99 AED</b><s>11.99</s></div><button class="add">Add to Cart</button></div></article>
+        <article class="card"><div class="img"><img src="https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=900&q=80"></div><div class="info"><div class="type">Fresh</div><div class="name">Fresh Strawberries</div><div class="meta">⭐ 4.9 • 500g</div><div class="price"><b>18.99 AED</b></div><button class="add">Add to Cart</button></div></article>
+        <article class="card"><div class="img"><img src="https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=900&q=80"><span class="disc">17% OFF</span></div><div class="info"><div class="type">Fresh</div><div class="name">Ripe Mangoes</div><div class="meta">⭐ 4.8 • 1 kg</div><div class="price"><b>24.99 AED</b><s>29.99</s></div><button class="add">Add to Cart</button></div></article>
+        <article class="card"><div class="img"><img src="https://images.unsplash.com/photo-1537640538966-79f369143f8f?auto=format&fit=crop&w=900&q=80"></div><div class="info"><div class="type">Fresh</div><div class="name">Fresh Grapes</div><div class="meta">⭐ 4.5 • 500g</div><div class="price"><b>15.99 AED</b></div><button class="add">Add to Cart</button></div></article>
+        <article class="card"><div class="img"><img src="https://images.unsplash.com/photo-1546470427-e5ac89cd0b51?auto=format&fit=crop&w=900&q=80"><span class="disc">31% OFF</span></div><div class="info"><div class="type">Fresh</div><div class="name">Fresh Tomatoes</div><div class="meta">⭐ 4.6 • 1 kg</div><div class="price"><b>5.49 AED</b><s>7.99</s></div><button class="add">Add to Cart</button></div></article>
+        <article class="card"><div class="img"><img src="https://images.unsplash.com/photo-1604977046802-1f8fd2f15e5a?auto=format&fit=crop&w=900&q=80"></div><div class="info"><div class="type">Fresh</div><div class="name">Organic Cucumbers</div><div class="meta">⭐ 4.5 • 500g</div><div class="price"><b>4.99 AED</b></div><button class="add">Add to Cart</button></div></article>
+        <article class="card"><div class="img"><img src="https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?auto=format&fit=crop&w=900&q=80"></div><div class="info"><div class="type">Fresh</div><div class="name">Fresh Lettuce</div><div class="meta">⭐ 4.7 • 1 head</div><div class="price"><b>3.99 AED</b></div><button class="add">Add to Cart</button></div></article>
+        <article class="card"><div class="img"><img src="https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=900&q=80"><span class="disc">23% OFF</span></div><div class="info"><div class="type">Fresh</div><div class="name">Bell Peppers Mix</div><div class="meta">⭐ 4.6 • 500g</div><div class="price"><b>9.99 AED</b><s>12.99</s></div><button class="add">Add to Cart</button></div></article>
+        <article class="card"><div class="img"><img src="https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&w=900&q=80"></div><div class="info"><div class="type">Fresh</div><div class="name">Fresh Carrots</div><div class="meta">⭐ 4.5 • 1 kg</div><div class="price"><b>4.49 AED</b></div><button class="add">Add to Cart</button></div></article>
+        <article class="card"><div class="img"><img src="https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=900&q=80"></div><div class="info"><div class="type">Fresh</div><div class="name">Organic Spinach</div><div class="meta">⭐ 4.8 • 250g</div><div class="price"><b>6.99 AED</b></div><button class="add">Add to Cart</button></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter"><div class="container"><div><h5>Get Exclusive Offers</h5><p>Subscribe for deals & new product updates</p></div><div class="sub"><input placeholder="Enter your email"><button>Subscribe</button></div></div></section>
+
+  <footer class="footer"><div class="container footer-grid"><div><h6>Robo Al Ain</h6><p>Your trusted online supermarket in Al Ain.</p><p>1000+ products delivered fresh to your door.</p></div><div><h6>Quick Links</h6><p>All Products</p><p>Today's Deals</p><p>New Arrivals</p><p>My Orders</p></div><div><h6>Categories</h6><p>Fresh</p><p>Dairy & Eggs</p><p>Meat & Poultry</p><p>Bakery & Bread</p><p>Beverages</p></div><div><h6>Contact Us</h6><p>📍 Al Ain Mall, Al Ain, United Arab Emirates</p><p>📞 +971 3 123 4567</p><p>✉️ orders@roboalain.ae</p><p>🕒 Delivery: 8 AM - 10 PM</p></div></div><div class="container copyright"><span>© 2024 Robo Al Ain. All rights reserved.</span><span>We Accept: 💳 🏦 💵</span></div></footer>
 </body>
 </html>
