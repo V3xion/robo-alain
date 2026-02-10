@@ -4,336 +4,120 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Robo Al Ain | Fresh Market</title>
-  <meta name="description" content="Fresh groceries delivered to your door in Al Ain." />
   <style>
-    :root{
-      --green:#45b649;
-      --orange:#f97316;
-      --bg:#f4f6f8;
-      --ink:#0f172a;
-      --muted:#64748b;
-      --line:#dbe3ea;
-      --navy:#081d4b;
-      --card:#ffffff;
-    }
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
-    .container{max-width:1200px;margin:0 auto;padding:0 16px}
-    .top{background:var(--green);color:#fff;font-size:14px}
-    .top .container{display:flex;justify-content:space-between;gap:12px;padding:10px 16px;flex-wrap:wrap}
+    :root{--green:#49b44f;--orange:#f97316;--ink:#0f2345;--muted:#5d738f;--line:#d6dde5;--soft:#f1f4f6;--card:#fff;--navy:#081d4b}
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#f5f7f8;color:var(--ink)}
+    .hide{display:none!important}.container{max-width:1220px;margin:0 auto;padding:0 16px}
+    .top{background:var(--green);color:#fff;font-size:14px}.top .container{display:flex;justify-content:space-between;padding:10px 0;gap:12px;flex-wrap:wrap}
+    .bar{background:#fff;border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20}.bar-main{display:grid;grid-template-columns:auto 1fr auto auto;gap:10px;align-items:center;padding:12px 0}
+    .logo{display:flex;align-items:center;gap:10px}.logo-badge{width:44px;height:44px;border:2px solid var(--green);display:grid;place-items:center;border-radius:10px;background:#f0fff2}
+    .logo h1{margin:0;font-size:24px;line-height:1}.logo p{margin:2px 0 0;color:var(--muted);font-size:13px}
+    .search-wrap{position:relative}.search{width:100%;border:1px solid var(--line);background:#edf2ed;border-radius:999px;padding:12px 40px 12px 14px}.search-ico{position:absolute;right:14px;top:50%;transform:translateY(-50%)}
+    .cart-btn{border:0;background:var(--orange);color:#fff;border-radius:999px;padding:10px 14px;font-weight:700;cursor:pointer}.menu{display:flex;gap:18px;padding:10px 0 14px;font-size:14px;white-space:nowrap;overflow:auto}
+    .menu a{color:#21324c;text-decoration:none;cursor:pointer}
+    .hero{background:#fff;padding:24px 0}.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}.offer{display:inline-block;background:#fff2e8;color:var(--orange);border:1px solid #ffdbbf;border-radius:999px;padding:8px 14px;font-weight:700}
+    .hero h2{font-size:52px;line-height:1.05;margin:14px 0}.hero h2 span{color:var(--green)}.hero p{color:var(--muted);font-size:20px;margin:0}
+    .cta{display:flex;gap:10px;margin-top:16px}.btn{padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:#fff;cursor:pointer;font-weight:700}.btn.primary{background:var(--green);color:#fff;border-color:var(--green)}.btn.alt{border-color:#f0ba98;color:var(--orange);background:#fff7f1}
+    .heroimg{position:relative}.heroimg img{width:100%;height:420px;border-radius:20px;object-fit:cover}.tag{position:absolute;left:14px;bottom:14px;background:var(--orange);color:#fff;border-radius:14px;padding:10px 12px;font-weight:800}
+    section{padding:22px 0}.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.head h3{margin:0;font-size:34px}
+    .cats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}.cat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}.cat img{width:58px;height:58px;border-radius:50%;object-fit:cover}.cat b{display:block;font-size:14px}.cat small{color:var(--muted)}
+    .deals-wrap{background:#ececec}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.card{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}.img{position:relative}.img img{width:100%;height:180px;object-fit:cover}.disc{position:absolute;top:8px;left:8px;background:var(--orange);color:#fff;padding:4px 8px;border-radius:8px;font-size:12px;font-weight:800}
+    .info{padding:10px;display:flex;flex-direction:column;gap:8px;flex:1}.type{font-size:11px;color:var(--muted);text-transform:uppercase}.name{font-size:18px;font-weight:700}.meta{font-size:13px;color:var(--muted)}.price b{font-size:24px;color:var(--green)} .price s{font-size:14px;color:var(--muted)}
+    .qty-bar{margin-top:auto;background:#e7eeea;border-radius:12px;display:grid;grid-template-columns:44px 1fr 44px;align-items:center;height:44px}
+    .qty-btn{background:transparent;border:0;font-size:28px;color:#22324b;cursor:pointer}.qty-val{text-align:center;font-size:32px;font-weight:700;line-height:1}
+    .add{margin-top:auto;background:var(--green);color:#fff;border:0;border-radius:8px;padding:10px;font-weight:700;cursor:pointer}.add[disabled]{background:#cdd5df;color:#4b5f77;cursor:not-allowed}
+    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;cursor:pointer}.chip.active{background:var(--green);color:#fff;border-color:var(--green)}
+    .newsletter{background:var(--green);color:#fff}.newsletter .container{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.sub{display:flex;gap:8px}.sub input{border:0;border-radius:999px;padding:10px 12px}.sub button{border:0;border-radius:999px;background:var(--orange);color:#fff;padding:10px 14px;font-weight:700;cursor:pointer}
+    .footer{background:var(--navy);color:#fff;padding:26px 0 0}.footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.2fr;gap:18px;padding-bottom:20px}.footer h6{margin:0 0 8px;font-size:22px}.footer p{margin:0 0 8px;color:#d9e2f4;font-size:14px}.copyright{border-top:1px solid rgba(255,255,255,.2);padding:12px 0;color:#d9e2f4;font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap}
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:35;display:none}.overlay.show{display:block}
+    .cart-panel{position:fixed;top:0;right:-420px;width:min(420px,96vw);height:100vh;background:#fff;z-index:40;box-shadow:-8px 0 30px rgba(0,0,0,.2);transition:right .25s ease;display:flex;flex-direction:column}.cart-panel.open{right:0}.cart-head{display:flex;justify-content:space-between;padding:14px;border-bottom:1px solid var(--line)}.cart-items{padding:12px;overflow:auto;flex:1}
+    .cart-item{display:grid;grid-template-columns:56px 1fr auto;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}.cart-item img{width:56px;height:56px;object-fit:cover;border-radius:8px}
+    .qty-row{display:flex;gap:6px;align-items:center}.qty-row button{border:1px solid var(--line);background:#fff;border-radius:6px;width:24px;height:24px;cursor:pointer}
+    .cart-foot{border-top:1px solid var(--line);padding:12px}.checkout-fields{display:grid;gap:8px;margin:8px 0}.checkout-fields input{border:1px solid var(--line);border-radius:8px;padding:10px}.checkout{width:100%;border:0;background:var(--orange);color:#fff;border-radius:9px;padding:12px;font-weight:700;cursor:pointer}.checkout-msg{font-size:13px;color:var(--green);font-weight:700;min-height:18px;margin-top:8px}
 
-    .bar{background:#fff;position:sticky;top:0;z-index:30;border-bottom:1px solid var(--line)}
-    .bar-main{display:grid;grid-template-columns:auto 1fr auto auto;gap:12px;align-items:center;padding:12px 0}
-    .logo{display:flex;align-items:center;gap:10px}
-    .logo-badge{width:44px;height:44px;border:2px solid var(--green);border-radius:10px;display:grid;place-items:center;background:#f0fff4;font-size:22px}
-    .logo h1{margin:0;font-size:24px;line-height:1.1}
-    .logo p{margin:0;color:var(--muted);font-size:13px}
-    .search-wrap{position:relative}
-    .search{width:100%;border:1px solid var(--line);background:#eef3ef;border-radius:999px;padding:12px 40px 12px 14px;font-size:15px}
-    .search-ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);opacity:.55}
-    .lang{font-weight:700}
-    .cart-btn{border:0;background:var(--orange);color:#fff;border-radius:999px;padding:10px 14px;font-weight:700;cursor:pointer}
-    .menu{display:flex;gap:18px;padding:10px 0 14px;font-size:14px;overflow:auto;white-space:nowrap}
-    .menu a{cursor:pointer;color:#1f2937;text-decoration:none}
-    .menu a:hover{color:var(--green)}
-
-    .hero{background:#fff;padding:24px 0;border-bottom:1px solid var(--line)}
-    .hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:center}
-    .offer{display:inline-block;background:#fff2e8;color:var(--orange);border:1px solid #ffd8bf;border-radius:999px;padding:8px 14px;font-weight:700;font-size:14px}
-    .hero h2{font-size:52px;line-height:1.05;margin:14px 0}
-    .hero h2 span{color:var(--green)}
-    .hero p{font-size:20px;color:var(--muted);margin:0}
-    .cta{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
-    .btn{border-radius:999px;padding:11px 18px;font-weight:700;border:1px solid var(--line);background:#fff;cursor:pointer}
-    .btn.primary{background:var(--green);border-color:var(--green);color:#fff}
-    .btn.alt{color:var(--orange);border-color:#f4b58e;background:#fff7f1}
-    .heroimg{position:relative}
-    .heroimg img{width:100%;height:420px;object-fit:cover;border-radius:20px}
-    .tag{position:absolute;left:14px;bottom:14px;background:var(--orange);color:#fff;border-radius:14px;padding:10px 12px;font-weight:800}
-
-    section{padding:24px 0}
-    .head{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px}
-    .head h3{margin:0;font-size:34px}
-    .head a{font-weight:700;color:var(--green);text-decoration:none}
-
-    .cats{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
-    .cat{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;text-align:center}
-    .cat img{width:60px;height:60px;border-radius:999px;object-fit:cover;display:block;margin:0 auto 8px}
-    .cat b{font-size:14px;display:block}
-    .cat small{font-size:12px;color:var(--muted)}
-
-    .deals-wrap{background:#ececec}
-    .deal-head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
-    .deal-title h4{margin:0;font-size:30px}
-    .deal-title p{margin:4px 0 0;color:var(--muted)}
-    .timer{background:#fff;border-radius:999px;padding:8px 12px;font-weight:700;font-size:13px}
-
-    .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-    .card{background:#fff;border-radius:12px;border:1px solid var(--line);overflow:hidden;display:flex;flex-direction:column}
-    .card .img{position:relative}
-    .card img{width:100%;height:180px;object-fit:cover}
-    .disc{position:absolute;top:8px;left:8px;background:var(--orange);color:#fff;padding:4px 8px;border-radius:8px;font-size:12px;font-weight:800}
-    .info{padding:10px;display:flex;flex-direction:column;gap:8px;height:100%}
-    .type{font-size:11px;color:var(--muted);text-transform:uppercase}
-    .name{font-size:18px;font-weight:700}
-    .meta{font-size:13px;color:var(--muted)}
-    .price b{font-size:26px;color:var(--green)}
-    .price s{font-size:14px;color:var(--muted);margin-left:6px}
-    .add{margin-top:auto;background:var(--green);color:#fff;border:0;border-radius:8px;padding:10px;font-weight:700;cursor:pointer}
-    .add[disabled]{background:#cbd5e1;color:#475569;cursor:not-allowed}
-
-    .chips{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-    .chip{border:1px solid var(--line);padding:7px 12px;border-radius:999px;background:#fff;font-size:13px;cursor:pointer}
-    .chip.active{background:var(--green);border-color:var(--green);color:#fff}
-
-    .newsletter{background:var(--green);color:#fff}
-    .newsletter .container{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-    .newsletter h5{margin:0;font-size:28px}
-    .newsletter p{margin:3px 0 0}
-    .sub{display:flex;gap:8px;flex-wrap:wrap}
-    .sub input{border:0;border-radius:999px;padding:11px 14px;min-width:260px}
-    .sub button{border:0;background:var(--orange);color:#fff;border-radius:999px;padding:11px 16px;font-weight:700;cursor:pointer}
-
-    .footer{background:var(--navy);color:#fff;padding:28px 0 0}
-    .footer-grid{display:grid;grid-template-columns:1.2fr 1fr 1fr 1.2fr;gap:18px;padding-bottom:24px}
-    .footer h6{margin:0 0 10px;font-size:22px}
-    .footer p{margin:0 0 8px;color:#d9e2f4;font-size:14px}
-    .copyright{border-top:1px solid rgba(255,255,255,.2);padding:12px 0;color:#d9e2f4;font-size:13px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
-
-    .cart-panel{position:fixed;top:0;right:-420px;width:min(420px,95vw);height:100vh;background:#fff;z-index:40;box-shadow:-8px 0 30px rgba(0,0,0,.2);transition:right .25s ease;display:flex;flex-direction:column}
-    .cart-panel.open{right:0}
-    .cart-head{display:flex;justify-content:space-between;align-items:center;padding:16px;border-bottom:1px solid var(--line)}
-    .cart-items{padding:12px;overflow:auto;flex:1}
-    .cart-item{display:grid;grid-template-columns:56px 1fr auto;gap:8px;align-items:center;border-bottom:1px solid var(--line);padding:8px 0}
-    .cart-item img{width:56px;height:56px;object-fit:cover;border-radius:8px}
-    .qty{display:flex;align-items:center;gap:6px}
-    .qty button{border:1px solid var(--line);background:#fff;border-radius:6px;width:24px;height:24px;cursor:pointer}
-    .cart-foot{border-top:1px solid var(--line);padding:12px}
-    .checkout{width:100%;padding:12px;border:0;background:var(--orange);color:#fff;border-radius:9px;font-weight:700;cursor:pointer}
-    .checkout-fields{display:grid;gap:8px;margin:10px 0}
-    .checkout-fields input{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px}
-    .checkout-msg{margin-top:8px;font-size:13px;color:var(--green);font-weight:600;min-height:18px}
-    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:35;display:none}
-    .overlay.show{display:block}
-
-    @media (max-width:900px){
-      .bar-main{grid-template-columns:1fr auto;grid-template-areas:'logo cart' 'search search'}
-      .logo{grid-area:logo}.cart-btn{grid-area:cart}.search-wrap{grid-area:search}.lang{display:none}
-      .hero-grid{grid-template-columns:1fr}.hero h2{font-size:38px}.hero p{font-size:17px}
-      .cats{grid-template-columns:repeat(3,1fr)}
-      .grid{grid-template-columns:repeat(2,1fr)}
-      .footer-grid{grid-template-columns:1fr 1fr}
-    }
+    /* Admin */
+    .admin-wrap{min-height:100vh;background:#eef2f1}.admin-top{background:#fff;border-bottom:1px solid #d1dfcf}.admin-top .container{display:flex;justify-content:space-between;align-items:center;padding:10px 0}
+    .admin-brand{display:flex;align-items:center;gap:12px}.admin-brand .logo-badge{width:52px;height:52px}
+    .admin-login{max-width:660px;margin:56px auto;background:#fff;border-radius:16px;padding:36px}
+    .admin-login h2{font-size:48px;margin:0 0 10px}.admin-login p{color:var(--muted);font-size:32px;margin:0 0 18px}.admin-login input{width:100%;padding:16px;border-radius:10px;border:1px solid #d5dde7;margin:10px 0;font-size:30px}
+    .admin-btn{width:100%;padding:14px;border:0;border-radius:999px;background:var(--green);color:#fff;font-weight:700;cursor:pointer;font-size:38px}
+    .admin-body{padding:22px 0}.admin-grid{display:grid;grid-template-columns:2fr 1fr;gap:18px}
+    .panel{background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px}.panel h3{margin:0 0 8px;font-size:24px}
+    .row6{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}.row6 input,.row3 input,.purchase-form input{padding:10px;border:1px solid var(--line);border-radius:8px}
+    .table-head,.product-row{display:grid;grid-template-columns:1.1fr .7fr .8fr .7fr 1.1fr .8fr .9fr;gap:8px;align-items:center}
+    .table-head{font-weight:700;color:#546b8a;padding:8px 0;border-bottom:1px solid var(--line)}.product-row{padding:10px 0;border-bottom:1px solid #edf1f5}
+    .product-row input{width:100%;padding:9px;border:1px solid var(--line);border-radius:8px}
+    .stock-btn{border:0;border-radius:999px;padding:10px 14px;font-weight:700;cursor:pointer}.stock-on{background:var(--green);color:#fff}.stock-off{background:#eef2f4;color:#172b4d}
+    .purchase-form{display:grid;gap:10px}.pill-row{display:flex;gap:8px}.pill{border:1px solid var(--line);padding:10px 16px;border-radius:999px;background:#fff;cursor:pointer}.pill.active{background:var(--green);color:#fff;border-color:var(--green)}
+    .warn{background:#fff8e7;border:1px solid #f2d277;border-radius:14px;padding:12px;color:#8a5a00;margin-bottom:14px}
+    @media (max-width:980px){.bar-main{grid-template-columns:1fr auto}.search-wrap{grid-column:1/-1}.hero-grid{grid-template-columns:1fr}.cats{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:repeat(2,1fr)}.footer-grid{grid-template-columns:1fr 1fr}.admin-grid{grid-template-columns:1fr}.row6{grid-template-columns:1fr 1fr}.table-head,.product-row{grid-template-columns:1fr 1fr}}
   </style>
 </head>
 <body>
-  <div class="top"><div class="container"><span>🚚 Free Delivery on Orders Over 100 AED • 📍 Delivering to Al Ain, UAE</span><span>Customer Service: +971 3 123 4567 • العربية</span></div></div>
+  <main id="storefront">
+    <div class="top"><div class="container"><span>🚚 Free Delivery on Orders Over 100 AED • 📍 Delivering to Al Ain, UAE</span><span>Customer Service: +971 3 123 4567 • العربية</span></div></div>
+    <header class="bar"><div class="container"><div class="bar-main"><div class="logo"><div class="logo-badge">🛒</div><div><h1>Robo Al Ain</h1><p>Fresh Market</p></div></div><div class="search-wrap"><input id="searchInput" class="search" placeholder="Search from over 1000+ products..."/><span class="search-ico">🔎</span></div><div>العربية</div><button id="cartBtn" class="cart-btn">🛒 <span id="cartCount">0</span></button></div><nav class="menu"><a href="#home">Home</a><a href="#categories">Fresh</a><a href="#products">Products</a><a href="#deals">Deals</a><a href="/admin">Admin</a></nav></div></header>
+    <section id="home" class="hero"><div class="container hero-grid"><div><span class="offer">% Up to 30% OFF on Fresh Produce</span><h2>Fresh Groceries<br><span>Delivered to Your Door</span></h2><p>Shop from 1000+ quality products with same-day delivery in Al Ain.</p><div class="cta"><button class="btn primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Start Shopping →</button><button class="btn alt" onclick="document.getElementById('deals').scrollIntoView({behavior:'smooth'})">View Today's Deals</button></div></div><div class="heroimg"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1400&q=80" alt="Fresh vegetables"><div class="tag">30% OFF<br><span style="font-size:14px;font-weight:500">Fresh Picks</span></div></div></div></section>
+    <section id="categories"><div class="container"><div class="head"><h3>Shop by Category</h3><a href="#products">View All →</a></div><div class="cats" id="categoryGrid"></div></div></section>
+    <section id="deals" class="deals-wrap"><div class="container"><div class="head"><h3>🔥 Today's Hot Deals</h3><div style="background:#fff;border-radius:999px;padding:8px 12px;font-weight:700">⏱ Ends in: 12:45:30</div></div><div class="grid" id="dealsGrid"></div></div></section>
+    <section id="products"><div class="container"><div class="head"><h3>Popular Products</h3></div><div class="chips" id="chips"></div><div class="grid" id="productsGrid"></div></div></section>
+    <section class="newsletter" id="contact"><div class="container"><div><h5 style="margin:0;font-size:28px">Get Exclusive Offers</h5><p style="margin:4px 0 0">Subscribe for deals & new product updates</p></div><div class="sub"><input id="subEmail" placeholder="Enter your email"><button id="subBtn">Subscribe</button></div></div></section>
+    <footer class="footer"><div class="container footer-grid"><div><h6>Robo Al Ain</h6><p>Your trusted online supermarket in Al Ain.</p><p>1000+ products delivered fresh to your door.</p></div><div><h6>Quick Links</h6><p>All Products</p><p>Today's Deals</p><p>New Arrivals</p><p>My Orders</p></div><div><h6>Categories</h6><p>Fresh</p><p>Dairy & Eggs</p><p>Meat & Poultry</p><p>Bakery & Bread</p><p>Beverages</p></div><div><h6>Contact Us</h6><p>📍 Al Ain Mall, Al Ain, UAE</p><p>📞 +971 3 123 4567</p><p>✉️ orders@roboalain.ae</p><p>🕒 Delivery: 8 AM - 10 PM</p></div></div><div class="container copyright"><span>© 2024 Robo Al Ain. All rights reserved.</span><span>We Accept: 💳 🏦 💵</span></div></footer>
+    <div id="overlay" class="overlay"></div>
+    <aside id="cartPanel" class="cart-panel"><div class="cart-head"><strong>Your Cart</strong><button id="closeCart" class="btn" style="padding:6px 10px">Close</button></div><div id="cartItems" class="cart-items"></div><div class="cart-foot"><p style="margin:0 0 8px">Subtotal: <strong id="cartSubtotal">0.00 AED</strong></p><div class="checkout-fields"><input id="checkoutName" placeholder="Full name"><input id="checkoutPhone" placeholder="Phone number"></div><button id="checkoutBtn" class="checkout">Checkout</button><p id="checkoutMsg" class="checkout-msg"></p></div></aside>
+  </main>
 
-  <header class="bar">
-    <div class="container">
-      <div class="bar-main">
-        <div class="logo"><div class="logo-badge">🛒</div><div><h1>Robo Al Ain</h1><p>Fresh Market</p></div></div>
-        <div class="search-wrap"><input id="searchInput" class="search" placeholder="Search from over 1000+ products..." /><span class="search-ico">🔎</span></div>
-        <div class="lang">العربية</div>
-        <button id="cartBtn" class="cart-btn">🛒 <span id="cartCount">0</span></button>
-      </div>
-      <nav class="menu">
-        <a href="#home">Home</a><a href="#categories">Fresh</a><a href="#categories">Dairy & Eggs</a><a href="#products">Popular</a><a href="#deals">Deals</a><a href="#contact">Contact</a>
-      </nav>
-    </div>
-  </header>
-
-  <section id="home" class="hero">
-    <div class="container hero-grid">
-      <div>
-        <span class="offer">% Up to 30% OFF on Fresh Produce</span>
-        <h2>Fresh Groceries<br><span>Delivered to Your Door</span></h2>
-        <p>Shop from 1000+ quality products. Fresh fruits, vegetables, dairy, meat & more with same-day delivery in Al Ain.</p>
-        <div class="cta"><button class="btn primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">Start Shopping →</button><button class="btn alt" onclick="document.getElementById('deals').scrollIntoView({behavior:'smooth'})">View Today's Deals</button></div>
-      </div>
-      <div class="heroimg"><img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1400&q=80" alt="Fresh vegetables"><div class="tag">30% OFF<br><span style="font-size:14px;font-weight:500">Fresh Picks</span></div></div>
-    </div>
-  </section>
-
-  <section id="categories">
-    <div class="container">
-      <div class="head"><h3>Shop by Category</h3><a href="#products">View All →</a></div>
-      <div class="cats" id="categoryGrid"></div>
-    </div>
-  </section>
-
-  <section id="deals" class="deals-wrap">
-    <div class="container">
-      <div class="deal-head"><div class="deal-title"><h4>🔥 Today's Hot Deals</h4><p>Limited time offers - Don't miss out!</p></div><div class="timer">⏱ Ends in: 12:45:30</div></div>
-      <div class="grid" id="dealsGrid"></div>
-    </div>
-  </section>
-
-  <section id="products">
-    <div class="container">
-      <div class="head"><h3>Popular Products</h3></div>
-      <div class="chips" id="chips"></div>
-      <div class="grid" id="productsGrid"></div>
-    </div>
-  </section>
-
-  <section class="newsletter" id="contact"><div class="container"><div><h5>Get Exclusive Offers</h5><p>Subscribe for deals & new product updates</p></div><div class="sub"><input id="subEmail" placeholder="Enter your email"><button id="subBtn">Subscribe</button></div></div></section>
-
-  <footer class="footer">
-    <div class="container footer-grid">
-      <div><h6>Robo Al Ain</h6><p>Your trusted online supermarket in Al Ain.</p><p>1000+ products delivered fresh to your door.</p></div>
-      <div><h6>Quick Links</h6><p>All Products</p><p>Today's Deals</p><p>New Arrivals</p><p>My Orders</p></div>
-      <div><h6>Categories</h6><p>Fresh</p><p>Dairy & Eggs</p><p>Meat & Poultry</p><p>Bakery & Bread</p><p>Beverages</p></div>
-      <div><h6>Contact Us</h6><p>📍 Al Ain Mall, Al Ain, United Arab Emirates</p><p>📞 +971 3 123 4567</p><p>✉️ orders@roboalain.ae</p><p>🕒 Delivery: 8 AM - 10 PM</p></div>
-    </div>
-    <div class="container copyright"><span>© 2024 Robo Al Ain. All rights reserved.</span><span>We Accept: 💳 🏦 💵</span></div>
-  </footer>
-
-  <div id="overlay" class="overlay"></div>
-  <aside id="cartPanel" class="cart-panel">
-    <div class="cart-head"><strong>Your Cart</strong><button id="closeCart" class="btn" style="padding:6px 10px">Close</button></div>
-    <div id="cartItems" class="cart-items"></div>
-    <div class="cart-foot">
-      <p style="margin:0 0 8px">Subtotal: <strong id="cartSubtotal">0.00 AED</strong></p>
-      <div class="checkout-fields">
-        <input id="checkoutName" placeholder="Full name" />
-        <input id="checkoutPhone" placeholder="Phone number" />
-      </div>
-      <button id="checkoutBtn" class="checkout">Checkout</button>
-      <p id="checkoutMsg" class="checkout-msg"></p>
-    </div>
-  </aside>
-
-  <script>
-    const categories = [
-      ["Fresh","265 items","https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=200&q=80"],
-      ["Dairy & Eggs","85 items","https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=200&q=80"],
-      ["Bakery","65 items","https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=200&q=80"],
-      ["Seafood","78 items","https://images.unsplash.com/photo-1579631542720-3a87824fff86?auto=format&fit=crop&w=200&q=80"],
-      ["Meat","92 items","https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=200&q=80"],
-      ["Deals","56 items","https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=200&q=80"]
-    ];
-
-    const products = [
-      {id:1,name:"Sweet Oranges",price:8.99,old:11.99,rating:4.7,unit:"1 kg",cat:"Fresh",discount:"25% OFF",img:"https://images.unsplash.com/photo-1582979512210-99b6a53386f9?auto=format&fit=crop&w=900&q=80"},
-      {id:2,name:"Ripe Mangoes",price:24.99,old:29.99,rating:4.8,unit:"1 kg",cat:"Fresh",discount:"17% OFF",img:"https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=900&q=80"},
-      {id:3,name:"Fresh Tomatoes",price:5.49,old:7.99,rating:4.6,unit:"1 kg",cat:"Fresh",discount:"31% OFF",img:"https://images.unsplash.com/photo-1546470427-e5ac89cd0b51?auto=format&fit=crop&w=900&q=80"},
-      {id:4,name:"Bell Peppers Mix",price:9.99,old:12.99,rating:4.6,unit:"500g",cat:"Fresh",discount:"23% OFF",img:"https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=900&q=80"},
-      {id:5,name:"Organic Red Apples",price:12.99,old:15.99,rating:4.8,unit:"1 kg",cat:"Fresh",discount:"19% OFF",img:"https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=900&q=80",out:true},
-      {id:6,name:"Fresh Bananas",price:6.49,old:null,rating:4.6,unit:"1 kg",cat:"Fresh",discount:null,img:"https://images.unsplash.com/photo-1603833665858-e61d17a86224?auto=format&fit=crop&w=900&q=80"},
-      {id:7,name:"Fresh Strawberries",price:18.99,old:null,rating:4.9,unit:"500g",cat:"Fresh",discount:null,img:"https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=900&q=80"},
-      {id:8,name:"Fresh Grapes",price:15.99,old:null,rating:4.5,unit:"500g",cat:"Fresh",discount:null,img:"https://images.unsplash.com/photo-1537640538966-79f369143f8f?auto=format&fit=crop&w=900&q=80"},
-      {id:9,name:"Organic Cucumbers",price:4.99,old:null,rating:4.5,unit:"500g",cat:"Fresh",discount:null,img:"https://images.unsplash.com/photo-1604977046802-1f8fd2f15e5a?auto=format&fit=crop&w=900&q=80"},
-      {id:10,name:"Fresh Lettuce",price:3.99,old:null,rating:4.7,unit:"1 head",cat:"Fresh",discount:null,img:"https://images.unsplash.com/photo-1622206151226-18ca2c9ab4a1?auto=format&fit=crop&w=900&q=80"},
-      {id:11,name:"Fresh Carrots",price:4.49,old:null,rating:4.5,unit:"1 kg",cat:"Fresh",discount:null,img:"https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?auto=format&fit=crop&w=900&q=80"},
-      {id:12,name:"Organic Spinach",price:6.99,old:null,rating:4.8,unit:"250g",cat:"Fresh",discount:null,img:"https://images.unsplash.com/photo-1576045057995-568f588f82fb?auto=format&fit=crop&w=900&q=80"}
-    ];
-
-    const deals = products.slice(0,4);
-    let selectedCategory = 'All';
-    let query = '';
-    const cart = new Map();
-
-    const $ = (id) => document.getElementById(id);
-    const fmt = (n) => `${n.toFixed(2)} AED`;
-
-    function renderCategories(){
-      $('categoryGrid').innerHTML = categories.map(c => `<div class="cat"><img src="${c[2]}" alt="${c[0]}"><b>${c[0]}</b><small>${c[1]}</small></div>`).join('');
-    }
-
-    function cardTemplate(p){
-      return `<article class="card">
-        <div class="img"><img src="${p.img}" alt="${p.name}">${p.discount?`<span class="disc">${p.discount}</span>`:''}</div>
-        <div class="info">
-          <div class="type">${p.cat}</div><div class="name">${p.name}</div>
-          <div class="meta">⭐ ${p.rating} • ${p.unit}</div>
-          <div class="price"><b>${fmt(p.price)}</b>${p.old?`<s>${p.old.toFixed(2)}</s>`:''}</div>
-          <button class="add" ${p.out?'disabled':''} onclick="addToCart(${p.id})">${p.out?'Out of Stock':'Add to Cart'}</button>
+  <main id="adminRoot" class="admin-wrap hide">
+    <div class="admin-top"><div class="container"><div class="admin-brand"><div class="logo-badge">🛒</div><div><h1 style="margin:0;font-size:44px">Robo Al Ain Admin</h1><p style="margin:2px 0 0;color:var(--muted);font-size:34px">Store Management</p></div></div><button class="btn" onclick="location.href='/'" style="font-size:30px">العربية</button></div></div>
+    <div id="adminLogin" class="admin-login"><h2>Sign In</h2><p>Log in to access the admin tools.</p><input id="adminUser" value="admin"><input id="adminPass" type="password" value="admin"><button id="adminLoginBtn" class="admin-btn">Sign In</button><p id="adminLoginMsg" style="color:#dc2626"></p></div>
+    <div id="adminPanel" class="container admin-body hide">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap"><div><h2 style="margin:0;font-size:54px">Admin Panel</h2><p style="margin:2px 0;color:var(--muted);font-size:34px">Manage Products</p></div><div style="display:flex;gap:10px"><button class="btn" id="signOutBtn">Sign Out</button><button class="btn primary" id="saveBtn">Save Changes</button></div></div>
+      <div class="warn">Cross-device sync is enabled via browser local storage sync in this demo.</div>
+      <div class="admin-grid">
+        <div>
+          <div class="panel"><h3>Add Product</h3><div class="row6"><input id="newName" placeholder="Name"><input id="newPrice" placeholder="Price"><input id="newCategory" placeholder="Category"><input id="newUnit" placeholder="Unit"><input id="newImage" placeholder="Image"><input id="newOldPrice" placeholder="Original Price"></div><button id="addProductBtn" class="btn primary" style="margin-top:10px">Add Product</button></div>
+          <div class="panel" style="margin-top:14px"><div class="table-head"><div>Name</div><div>Price</div><div>Category</div><div>Unit</div><div>Image</div><div>Original Price</div><div>Stock</div></div><div id="adminProducts"></div></div>
         </div>
-      </article>`;
-    }
+        <div class="panel"><h3>Purchases</h3><p style="margin:0 0 8px;color:var(--muted)">Live purchases from main page checkout.</p><div id="purchaseList" style="display:grid;gap:10px"></div></div>
+      </div>
+    </div>
+  </main>
 
-    function renderDeals(){ $('dealsGrid').innerHTML = deals.map(cardTemplate).join(''); }
+<script>
+const STORAGE_KEY='robo-alain-data-v2';
+const categories=[['Fresh','265 items','https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=200&q=80'],['Dairy & Eggs','85 items','https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=200&q=80'],['Bakery','65 items','https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=200&q=80'],['Seafood','78 items','https://images.unsplash.com/photo-1579631542720-3a87824fff86?auto=format&fit=crop&w=200&q=80'],['Meat','92 items','https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=200&q=80'],['Deals','56 items','https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=200&q=80']];
+const seedProducts=[{id:1,name:'Sweet Oranges',price:8.99,old:11.99,rating:4.7,unit:'1 kg',cat:'Fresh',discount:'25% OFF',img:'https://images.unsplash.com/photo-1582979512210-99b6a53386f9?auto=format&fit=crop&w=900&q=80',inStock:true},{id:2,name:'Ripe Mangoes',price:24.99,old:29.99,rating:4.8,unit:'1 kg',cat:'Fresh',discount:'17% OFF',img:'https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=900&q=80',inStock:true},{id:3,name:'Fresh Tomatoes',price:5.49,old:7.99,rating:4.6,unit:'1 kg',cat:'Fresh',discount:'31% OFF',img:'https://images.unsplash.com/photo-1546470427-e5ac89cd0b51?auto=format&fit=crop&w=900&q=80',inStock:true},{id:4,name:'Bell Peppers Mix',price:9.99,old:12.99,rating:4.6,unit:'500g',cat:'Fresh',discount:'23% OFF',img:'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=900&q=80',inStock:true},{id:5,name:'Organic Red Apples',price:12.99,old:15.99,rating:4.8,unit:'1 kg',cat:'Fresh',discount:'19% OFF',img:'https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=900&q=80',inStock:false},{id:6,name:'Fresh Bananas',price:6.49,old:null,rating:4.6,unit:'1 kg',cat:'Fresh',discount:null,img:'https://images.unsplash.com/photo-1603833665858-e61d17a86224?auto=format&fit=crop&w=900&q=80',inStock:true}];
+let state={products:[],purchases:[]};
+let selectedCategory='All', query='';
+const cart=new Map();
+const $=id=>document.getElementById(id); const fmt=n=>`${Number(n).toFixed(2)} AED`;
+function load(){const raw=localStorage.getItem(STORAGE_KEY); state=raw?JSON.parse(raw):{products:seedProducts,purchases:[]}; if(!state.products?.length)state.products=seedProducts; if(!state.purchases)state.purchases=[];}
+function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state)); renderAll();}
+window.addEventListener('storage',e=>{ if(e.key===STORAGE_KEY){ load(); renderAll(); }});
 
-    function renderChips(){
-      const cats = ['All', ...new Set(products.map(p=>p.cat))];
-      $('chips').innerHTML = cats.map(c => `<button class="chip ${c===selectedCategory?'active':''}" onclick="setCategory('${c}')">${c}</button>`).join('');
-    }
+function renderCategories(){const el=$('categoryGrid'); if(!el) return; el.innerHTML=categories.map(c=>`<div class="cat"><img src="${c[2]}" alt="${c[0]}"><b>${c[0]}</b><small>${c[1]}</small></div>`).join('');}
+function qtyFor(id){return cart.get(id)?.qty||0;}
+window.changeQtyCard=(id,d)=>{const p=state.products.find(x=>x.id===id); if(!p||!p.inStock)return; const cur=cart.get(id)||{...p,qty:0}; cur.qty=Math.max(0,cur.qty+d); if(cur.qty===0)cart.delete(id); else cart.set(id,cur); updateCartUI(); renderStoreProducts(); renderDeals();}
+function card(p){const qty=qtyFor(p.id);return `<article class="card"><div class="img"><img src="${p.img}" alt="${p.name}">${p.discount?`<span class="disc">${p.discount}</span>`:''}</div><div class="info"><div class="type">${p.cat}</div><div class="name">${p.name}</div><div class="meta">⭐ ${p.rating} • ${p.unit}</div><div class="price"><b>${fmt(p.price)}</b>${p.old?` <s>${Number(p.old).toFixed(2)}</s>`:''}</div>${!p.inStock?'<button class="add" disabled>Out of Stock</button>':qty>0?`<div class="qty-bar"><button class="qty-btn" onclick="changeQtyCard(${p.id},-1)">−</button><div class="qty-val">${qty}</div><button class="qty-btn" onclick="changeQtyCard(${p.id},1)">+</button></div>`:`<button class="add" onclick="changeQtyCard(${p.id},1)">Add to Cart</button>`}</div></article>`}
+function renderDeals(){const el=$('dealsGrid'); if(!el) return; el.innerHTML=state.products.slice(0,4).map(card).join('');}
+function renderStoreProducts(){const chips=$('chips'), grid=$('productsGrid'); if(!chips||!grid)return; const cats=['All',...new Set(state.products.map(p=>p.cat))]; chips.innerHTML=cats.map(c=>`<button class="chip ${c===selectedCategory?'active':''}" onclick="setCategory('${c.replace(/'/g,"\\'")}')">${c}</button>`).join(''); const list=state.products.filter(p=>(selectedCategory==='All'||p.cat===selectedCategory)&&p.name.toLowerCase().includes(query.toLowerCase())); grid.innerHTML=list.length?list.map(card).join(''):'<p>No products found.</p>';}
+window.setCategory=(c)=>{selectedCategory=c; renderStoreProducts();};
+function updateCartUI(){const items=[...cart.values()], count=items.reduce((a,b)=>a+b.qty,0), subtotal=items.reduce((a,b)=>a+b.qty*Number(b.price),0); if($('cartCount')) $('cartCount').textContent=count; if($('cartSubtotal')) $('cartSubtotal').textContent=fmt(subtotal); if($('cartItems')) $('cartItems').innerHTML=items.length?items.map(i=>`<div class="cart-item"><img src="${i.img}"><div><strong>${i.name}</strong><div style="color:var(--muted);font-size:13px">${fmt(i.price)}</div><div class="qty-row"><button onclick="changeQtyCard(${i.id},-1)">-</button><span>${i.qty}</span><button onclick="changeQtyCard(${i.id},1)">+</button></div></div><div style="font-weight:700">${fmt(i.qty*i.price)}</div></div>`).join(''):'<p style="color:var(--muted)">Your cart is empty.</p>'}
+function openCart(){ $('cartPanel')?.classList.add('open'); $('overlay')?.classList.add('show'); }
+function closeCart(){ $('cartPanel')?.classList.remove('open'); $('overlay')?.classList.remove('show'); }
 
-    function renderProducts(){
-      const filtered = products.filter(p => (selectedCategory==='All' || p.cat===selectedCategory) && p.name.toLowerCase().includes(query.toLowerCase()));
-      $('productsGrid').innerHTML = filtered.map(cardTemplate).join('') || '<p>No products found.</p>';
-    }
+function renderAdminProducts(){const wrap=$('adminProducts'); if(!wrap) return; wrap.innerHTML=state.products.map(p=>`<div class="product-row"><input value="${p.name}" onchange="adminEdit(${p.id},'name',this.value)"><input value="${p.price}" onchange="adminEdit(${p.id},'price',this.value)"><input value="${p.cat}" onchange="adminEdit(${p.id},'cat',this.value)"><input value="${p.unit}" onchange="adminEdit(${p.id},'unit',this.value)"><input value="${p.img}" onchange="adminEdit(${p.id},'img',this.value)"><input value="${p.old??''}" onchange="adminEdit(${p.id},'old',this.value)"><button class="stock-btn ${p.inStock?'stock-on':'stock-off'}" onclick="toggleStock(${p.id})">${p.inStock?'Mark Out of Stock':'Mark In Stock'}</button></div>`).join('');}
+window.adminEdit=(id,k,v)=>{const p=state.products.find(x=>x.id===id); if(!p)return; if(k==='price'||k==='old') p[k]=v===''?null:Number(v); else p[k]=v; save();}
+window.toggleStock=(id)=>{const p=state.products.find(x=>x.id===id); if(!p)return; p.inStock=!p.inStock; save();}
+function renderPurchases(){const el=$('purchaseList'); if(!el) return; el.innerHTML=state.purchases.length?state.purchases.slice().reverse().map(o=>`<div style="border:1px solid var(--line);border-radius:10px;padding:10px"><strong>${o.customer}</strong><div style="font-size:13px;color:var(--muted)">${o.phone}</div><div style="font-size:13px;color:var(--muted)">${new Date(o.time).toLocaleString()}</div><div style="margin-top:6px;font-size:14px">${o.items.map(i=>`${i.name} x${i.qty}`).join(', ')}</div><div style="font-weight:700;margin-top:4px">Total: ${fmt(o.total)}</div></div>`).join(''):'<p style="color:var(--muted)">No purchases yet.</p>'}
+function addProduct(){const n=$('newName').value.trim(),price=Number($('newPrice').value),cat=$('newCategory').value.trim()||'Fresh',unit=$('newUnit').value.trim()||'1 kg',img=$('newImage').value.trim()||'https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=900&q=80',old=$('newOldPrice').value.trim(); if(!n||!price) return; state.products.push({id:Date.now(),name:n,price,old:old?Number(old):null,rating:4.6,unit,cat,discount:null,img,inStock:true}); ['newName','newPrice','newCategory','newUnit','newImage','newOldPrice'].forEach(id=>$(id).value=''); save();}
 
-    function updateCartUI(){
-      const items = [...cart.values()];
-      const count = items.reduce((a,b)=>a+b.qty,0);
-      const subtotal = items.reduce((a,b)=>a+b.qty*b.price,0);
-      $('cartCount').textContent = count;
-      $('cartSubtotal').textContent = fmt(subtotal);
-      $('cartItems').innerHTML = items.length ? items.map(i => `<div class="cart-item">
-        <img src="${i.img}" alt="${i.name}">
-        <div><strong>${i.name}</strong><div style="color:var(--muted);font-size:13px">${fmt(i.price)}</div><div class="qty"><button onclick="changeQty(${i.id},-1)">-</button><span>${i.qty}</span><button onclick="changeQty(${i.id},1)">+</button></div></div>
-        <div style="font-weight:700">${fmt(i.price*i.qty)}</div>
-      </div>`).join('') : '<p style="color:var(--muted)">Your cart is empty.</p>';
-    }
+function setupStoreEvents(){ $('cartBtn')?.addEventListener('click',openCart); $('closeCart')?.addEventListener('click',closeCart); $('overlay')?.addEventListener('click',closeCart); $('searchInput')?.addEventListener('input',e=>{query=e.target.value; renderStoreProducts(); renderDeals();}); $('subBtn')?.addEventListener('click',()=>{const email=$('subEmail').value.trim(); if(!email.includes('@')) return alert('Please enter a valid email.'); alert('Subscribed successfully!'); $('subEmail').value='';}); $('checkoutBtn')?.addEventListener('click',()=>{const items=[...cart.values()],customer=$('checkoutName').value.trim(),phone=$('checkoutPhone').value.trim(); if(!items.length){$('checkoutMsg').textContent='Your cart is empty.'; return;} if(!customer||!phone){$('checkoutMsg').textContent='Please enter your name and phone number to checkout.'; return;} const total=items.reduce((a,b)=>a+b.qty*b.price,0); state.purchases.push({id:Date.now(),customer,phone,items:items.map(i=>({name:i.name,qty:i.qty,price:i.price})),total,time:Date.now()}); cart.clear(); $('checkoutName').value=''; $('checkoutPhone').value=''; $('checkoutMsg').textContent='Order has been sent to admin panel.'; save(); updateCartUI(); renderStoreProducts(); renderDeals(); renderPurchases();});}
+function setupAdminEvents(){ $('adminLoginBtn')?.addEventListener('click',()=>{if($('adminUser').value==='admin'&&$('adminPass').value==='admin'){sessionStorage.setItem('robo_admin_auth','1'); $('adminLogin').classList.add('hide'); $('adminPanel').classList.remove('hide'); renderAll();}else{$('adminLoginMsg').textContent='Invalid login';}}); if(sessionStorage.getItem('robo_admin_auth')==='1'){ $('adminLogin')?.classList.add('hide'); $('adminPanel')?.classList.remove('hide'); } $('signOutBtn')?.addEventListener('click',()=>{sessionStorage.removeItem('robo_admin_auth'); location.reload();}); $('saveBtn')?.addEventListener('click',()=>{save(); alert('Changes saved');}); $('addProductBtn')?.addEventListener('click',addProduct);}
 
-    window.addToCart = function(id){
-      const p = products.find(x=>x.id===id);
-      if(!p || p.out) return;
-      const current = cart.get(id) || {...p, qty:0};
-      current.qty += 1;
-      cart.set(id, current);
-      updateCartUI();
-    }
-
-    window.changeQty = function(id,delta){
-      const item = cart.get(id);
-      if(!item) return;
-      item.qty += delta;
-      if(item.qty <= 0) cart.delete(id); else cart.set(id,item);
-      updateCartUI();
-    }
-
-    window.setCategory = function(cat){ selectedCategory = cat; renderChips(); renderProducts(); }
-
-    function openCart(){ $('cartPanel').classList.add('open'); $('overlay').classList.add('show'); }
-    function closeCart(){ $('cartPanel').classList.remove('open'); $('overlay').classList.remove('show'); }
-
-    $('cartBtn').addEventListener('click', openCart);
-    $('closeCart').addEventListener('click', closeCart);
-    $('overlay').addEventListener('click', closeCart);
-    $('searchInput').addEventListener('input', (e)=>{ query=e.target.value; renderProducts(); renderDeals(); });
-    $('subBtn').addEventListener('click', ()=>{
-      const email = $('subEmail').value.trim();
-      if(!email || !email.includes('@')) return alert('Please enter a valid email.');
-      alert('Subscribed successfully!');
-      $('subEmail').value='';
-    });
-    $('checkoutBtn').addEventListener('click', ()=>{
-      const items = [...cart.values()];
-      const name = $('checkoutName').value.trim();
-      const phone = $('checkoutPhone').value.trim();
-      if(!items.length){
-        $('checkoutMsg').textContent = 'Your cart is empty.';
-        return;
-      }
-      if(!name || !phone){
-        $('checkoutMsg').textContent = 'Please enter your name and phone number to checkout.';
-        return;
-      }
-      cart.clear();
-      updateCartUI();
-      $('checkoutName').value = '';
-      $('checkoutPhone').value = '';
-      $('checkoutMsg').textContent = `Order for ${name} has been sent to admin panel.`;
-    });
-
-    renderCategories();
-    renderChips();
-    renderDeals();
-    renderProducts();
-    updateCartUI();
-  </script>
+function renderAll(){renderCategories();renderDeals();renderStoreProducts();updateCartUI();renderAdminProducts();renderPurchases();}
+function init(){load(); const isAdmin=location.pathname.startsWith('/admin') || new URLSearchParams(location.search).get('admin')==='1'; $('storefront').classList.toggle('hide',isAdmin); $('adminRoot').classList.toggle('hide',!isAdmin); setupStoreEvents(); setupAdminEvents(); renderAll();}
+init();
+</script>
 </body>
 </html>
