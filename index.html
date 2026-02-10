@@ -110,6 +110,9 @@
     .qty button{border:1px solid var(--line);background:#fff;border-radius:6px;width:24px;height:24px;cursor:pointer}
     .cart-foot{border-top:1px solid var(--line);padding:12px}
     .checkout{width:100%;padding:12px;border:0;background:var(--orange);color:#fff;border-radius:9px;font-weight:700;cursor:pointer}
+    .checkout-fields{display:grid;gap:8px;margin:10px 0}
+    .checkout-fields input{width:100%;border:1px solid var(--line);border-radius:8px;padding:10px}
+    .checkout-msg{margin-top:8px;font-size:13px;color:var(--green);font-weight:600;min-height:18px}
     .overlay{position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:35;display:none}
     .overlay.show{display:block}
 
@@ -192,7 +195,12 @@
     <div id="cartItems" class="cart-items"></div>
     <div class="cart-foot">
       <p style="margin:0 0 8px">Subtotal: <strong id="cartSubtotal">0.00 AED</strong></p>
+      <div class="checkout-fields">
+        <input id="checkoutName" placeholder="Full name" />
+        <input id="checkoutPhone" placeholder="Phone number" />
+      </div>
       <button id="checkoutBtn" class="checkout">Checkout</button>
+      <p id="checkoutMsg" class="checkout-msg"></p>
     </div>
   </aside>
 
@@ -277,7 +285,6 @@
       current.qty += 1;
       cart.set(id, current);
       updateCartUI();
-      openCart();
     }
 
     window.changeQty = function(id,delta){
@@ -305,13 +312,21 @@
     });
     $('checkoutBtn').addEventListener('click', ()=>{
       const items = [...cart.values()];
-      if(!items.length) return alert('Your cart is empty.');
-      const summary = items.map(i=>`${i.name} x${i.qty} = ${fmt(i.qty*i.price)}`).join('\n');
-      const total = items.reduce((a,b)=>a+b.qty*b.price,0);
-      alert(`Order placed successfully!\n\n${summary}\n\nTotal: ${fmt(total)}\n\nThank you for shopping with Robo Al Ain.`);
+      const name = $('checkoutName').value.trim();
+      const phone = $('checkoutPhone').value.trim();
+      if(!items.length){
+        $('checkoutMsg').textContent = 'Your cart is empty.';
+        return;
+      }
+      if(!name || !phone){
+        $('checkoutMsg').textContent = 'Please enter your name and phone number to checkout.';
+        return;
+      }
       cart.clear();
       updateCartUI();
-      closeCart();
+      $('checkoutName').value = '';
+      $('checkoutPhone').value = '';
+      $('checkoutMsg').textContent = `Order for ${name} has been sent to admin panel.`;
     });
 
     renderCategories();
