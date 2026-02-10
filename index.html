@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Robo Al Ain | Fresh Market</title>
+  <style>
+    *{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:#f8fafc;color:#0f172a}
+    .top{background:#45b649;color:#fff;padding:10px 18px;font-size:14px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+    .nav{background:#fff;padding:14px 18px;border-bottom:1px solid #e2e8f0;position:sticky;top:0}
+    .row{display:flex;align-items:center;gap:12px;max-width:1200px;margin:auto}
+    .brand{font-size:32px;font-weight:700;color:#16a34a}
+    .search{flex:1;background:#eef2f7;border-radius:999px;padding:12px 16px;color:#64748b}
+    .cart{background:#f97316;color:#fff;border:none;padding:12px 18px;border-radius:999px;font-weight:700}
+    .menu{max-width:1200px;margin:12px auto 0;display:flex;gap:20px;font-weight:700;color:#1e293b;flex-wrap:wrap}
+    .hero{max-width:1200px;margin:24px auto;padding:0 18px;display:grid;grid-template-columns:1.1fr 1fr;gap:30px}
+    .pill{display:inline-block;background:#fff2e8;color:#f97316;padding:10px 14px;border-radius:999px;font-weight:700}
+    h1{font-size:58px;line-height:1.05;margin:18px 0} h1 span{color:#16a34a}
+    .cta{display:flex;gap:14px;margin-top:18px;flex-wrap:wrap}.btn{padding:12px 20px;border-radius:999px;border:1px solid #16a34a;font-weight:700}
+    .btn.primary{background:#16a34a;color:#fff}.btn.alt{color:#f97316;border-color:#f97316;background:#fff}
+    .heroimg{width:100%;height:460px;border-radius:24px;object-fit:cover}
+    .sec{max-width:1200px;margin:28px auto;padding:0 18px}
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .card{background:#fff;border:1px solid #e2e8f0;border-radius:14px;overflow:hidden}
+    .card img{width:100%;height:180px;object-fit:cover}.card .p{padding:12px}
+    .price{font-size:26px;color:#16a34a;font-weight:700}
+    .footer{background:#0b1f50;color:#fff;padding:26px 18px;margin-top:40px}
+    @media(max-width:900px){.hero{grid-template-columns:1fr} h1{font-size:42px} .cards{grid-template-columns:repeat(2,1fr)}}
+  </style>
+</head>
+<body>
+  <div class="top"><div>🚚 Free Delivery on Orders Over 100 AED</div><div>Customer Service: +971 3 123 4567</div></div>
+  <header class="nav">
+    <div class="row">
+      <div class="brand">Robo Al Ain</div>
+      <div class="search">Search from over 1000+ products...</div>
+      <button class="cart">🛒 0</button>
+    </div>
+    <div class="menu"><span>Home</span><span>Fresh</span><span>Dairy & Eggs</span><span>Bakery</span><span>Deals</span><span>Contact</span></div>
+  </header>
+
+  <section class="hero">
+    <div>
+      <span class="pill">% Up to 30% OFF on Fresh Produce</span>
+      <h1>Fresh Groceries<br><span>Delivered to Your Door</span></h1>
+      <p>Shop from 1000+ quality products. Fresh fruits, vegetables, dairy, meat & more with same-day delivery in Al Ain.</p>
+      <div class="cta"><button class="btn primary">Start Shopping</button><button class="btn alt">View Today's Deals</button></div>
+    </div>
+    <img class="heroimg" src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1400&q=80" alt="grocery"/>
+  </section>
+
+  <section class="sec">
+    <h2>Today's Hot Deals</h2>
+    <div class="cards">
+      <article class="card"><img src="https://images.unsplash.com/photo-1582979512210-99b6a53386f9?auto=format&fit=crop&w=800&q=80"><div class="p"><strong>Sweet Oranges</strong><div class="price">8.99 AED</div></div></article>
+      <article class="card"><img src="https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80"><div class="p"><strong>Ripe Mangoes</strong><div class="price">24.99 AED</div></div></article>
+      <article class="card"><img src="https://images.unsplash.com/photo-1546470427-e5ac89cd0b51?auto=format&fit=crop&w=800&q=80"><div class="p"><strong>Fresh Tomatoes</strong><div class="price">5.49 AED</div></div></article>
+      <article class="card"><img src="https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=800&q=80"><div class="p"><strong>Bell Peppers Mix</strong><div class="price">9.99 AED</div></div></article>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div style="max-width:1200px;margin:auto;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap">
+      <span>© 2024 Robo Al Ain. All rights reserved.</span>
+      <span>orders@roboalain.ae</span>
+    </div>
+  </footer>
+</body>
+</html>
