@@ -85,14 +85,61 @@
 
 <script>
 const STORAGE_KEY='robo-alain-data-v2';
+const API_STATE_ENDPOINT='/api/state';
+const REMOTE_SYNC_MS=4000;
+let remoteSyncTimer=null;
 const categories=[['Fresh','265 items','https://images.unsplash.com/photo-1488459716781-31db52582fe9?auto=format&fit=crop&w=200&q=80'],['Dairy & Eggs','85 items','https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=200&q=80'],['Bakery','65 items','https://images.unsplash.com/photo-1549931319-a545dcf3bc73?auto=format&fit=crop&w=200&q=80'],['Seafood','78 items','https://images.unsplash.com/photo-1579631542720-3a87824fff86?auto=format&fit=crop&w=200&q=80'],['Meat','92 items','https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?auto=format&fit=crop&w=200&q=80'],['Deals','56 items','https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=200&q=80']];
 const seedProducts=[{id:1,name:'Sweet Oranges',price:8.99,old:11.99,rating:4.7,unit:'1 kg',cat:'Fresh',discount:'25% OFF',img:'https://images.unsplash.com/photo-1582979512210-99b6a53386f9?auto=format&fit=crop&w=900&q=80',inStock:true},{id:2,name:'Ripe Mangoes',price:24.99,old:29.99,rating:4.8,unit:'1 kg',cat:'Fresh',discount:'17% OFF',img:'https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=900&q=80',inStock:true},{id:3,name:'Fresh Tomatoes',price:5.49,old:7.99,rating:4.6,unit:'1 kg',cat:'Fresh',discount:'31% OFF',img:'https://images.unsplash.com/photo-1546470427-e5ac89cd0b51?auto=format&fit=crop&w=900&q=80',inStock:true},{id:4,name:'Bell Peppers Mix',price:9.99,old:12.99,rating:4.6,unit:'500g',cat:'Fresh',discount:'23% OFF',img:'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=900&q=80',inStock:true},{id:5,name:'Organic Red Apples',price:12.99,old:15.99,rating:4.8,unit:'1 kg',cat:'Fresh',discount:'19% OFF',img:'https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=900&q=80',inStock:false},{id:6,name:'Fresh Bananas',price:6.49,old:null,rating:4.6,unit:'1 kg',cat:'Fresh',discount:null,img:'https://images.unsplash.com/photo-1603833665858-e61d17a86224?auto=format&fit=crop&w=900&q=80',inStock:true}];
-let state={products:[],purchases:[]};
+let state={products:[],purchases:[],updatedAt:0};
 let selectedCategory='All', query='';
 const cart=new Map();
 const $=id=>document.getElementById(id); const fmt=n=>`${Number(n).toFixed(2)} AED`;
-function load(){const raw=localStorage.getItem(STORAGE_KEY); state=raw?JSON.parse(raw):{products:seedProducts,purchases:[]}; if(!state.products?.length)state.products=seedProducts; if(!state.purchases)state.purchases=[];}
-function save(){localStorage.setItem(STORAGE_KEY,JSON.stringify(state)); renderAll();}
+
+function normalizeState(input){
+  const safe=input&&typeof input==='object'?input:{};
+  const products=Array.isArray(safe.products)&&safe.products.length?safe.products:seedProducts;
+  const purchases=Array.isArray(safe.purchases)?safe.purchases:[];
+  const updatedAt=Number(safe.updatedAt)||Date.now();
+  return {products,purchases,updatedAt};
+}
+
+function load(){
+  const raw=localStorage.getItem(STORAGE_KEY);
+  try{ state=normalizeState(raw?JSON.parse(raw):{products:seedProducts,purchases:[],updatedAt:Date.now()}); }
+  catch{ state=normalizeState({products:seedProducts,purchases:[],updatedAt:Date.now()}); }
+}
+
+function save(syncRemote=true){
+  state.updatedAt=Date.now();
+  localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+  renderAll();
+  if(syncRemote) pushRemoteState();
+}
+
+async function pushRemoteState(){
+  try{
+    await fetch(API_STATE_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(state)});
+  }catch(_e){}
+}
+
+async function pullRemoteState(){
+  try{
+    const res=await fetch(API_STATE_ENDPOINT,{cache:'no-store'});
+    if(!res.ok) return;
+    const remote=normalizeState(await res.json());
+    if(!state.updatedAt || remote.updatedAt>state.updatedAt){
+      state=remote;
+      localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+      renderAll();
+    }
+  }catch(_e){}
+}
+
+function startRemoteSync(){
+  if(remoteSyncTimer) clearInterval(remoteSyncTimer);
+  remoteSyncTimer=setInterval(pullRemoteState,REMOTE_SYNC_MS);
+}
+
 window.addEventListener('storage',e=>{ if(e.key===STORAGE_KEY){ load(); renderAll(); }});
 
 function renderCategories(){const el=$('categoryGrid'); if(!el) return; el.innerHTML=categories.map(c=>`<div class="cat"><img src="${c[2]}" alt="${c[0]}"><b>${c[0]}</b><small>${c[1]}</small></div>`).join('');}
@@ -113,10 +160,10 @@ function renderPurchases(){const el=$('purchaseList'); if(!el) return; el.innerH
 function addProduct(){const n=$('newName').value.trim(),price=Number($('newPrice').value),cat=$('newCategory').value.trim()||'Fresh',unit=$('newUnit').value.trim()||'1 kg',img=$('newImage').value.trim()||'https://images.unsplash.com/photo-1490818387583-1baba5e638af?auto=format&fit=crop&w=900&q=80',old=$('newOldPrice').value.trim(); if(!n||!price) return; state.products.push({id:Date.now(),name:n,price,old:old?Number(old):null,rating:4.6,unit,cat,discount:null,img,inStock:true}); ['newName','newPrice','newCategory','newUnit','newImage','newOldPrice'].forEach(id=>$(id).value=''); save();}
 
 function setupStoreEvents(){ $('cartBtn')?.addEventListener('click',openCart); $('closeCart')?.addEventListener('click',closeCart); $('overlay')?.addEventListener('click',closeCart); $('searchInput')?.addEventListener('input',e=>{query=e.target.value; renderStoreProducts(); renderDeals();}); $('subBtn')?.addEventListener('click',()=>{const email=$('subEmail').value.trim(); if(!email.includes('@')) return alert('Please enter a valid email.'); alert('Subscribed successfully!'); $('subEmail').value='';}); $('checkoutBtn')?.addEventListener('click',()=>{const items=[...cart.values()],customer=$('checkoutName').value.trim(),phone=$('checkoutPhone').value.trim(); if(!items.length){$('checkoutMsg').textContent='Your cart is empty.'; return;} if(!customer||!phone){$('checkoutMsg').textContent='Please enter your name and phone number to checkout.'; return;} const total=items.reduce((a,b)=>a+b.qty*b.price,0); state.purchases.push({id:Date.now(),customer,phone,items:items.map(i=>({name:i.name,qty:i.qty,price:i.price})),total,time:Date.now()}); cart.clear(); $('checkoutName').value=''; $('checkoutPhone').value=''; $('checkoutMsg').textContent='Order has been sent to admin panel.'; save(); updateCartUI(); renderStoreProducts(); renderDeals(); renderPurchases();});}
-function setupAdminEvents(){ $('adminLoginBtn')?.addEventListener('click',()=>{if($('adminUser').value==='admin'&&$('adminPass').value==='admin'){sessionStorage.setItem('robo_admin_auth','1'); $('adminLogin').classList.add('hide'); $('adminPanel').classList.remove('hide'); renderAll();}else{$('adminLoginMsg').textContent='Invalid login';}}); if(sessionStorage.getItem('robo_admin_auth')==='1'){ $('adminLogin')?.classList.add('hide'); $('adminPanel')?.classList.remove('hide'); } $('signOutBtn')?.addEventListener('click',()=>{sessionStorage.removeItem('robo_admin_auth'); location.reload();}); $('saveBtn')?.addEventListener('click',()=>{save(); alert('Changes saved');}); $('addProductBtn')?.addEventListener('click',addProduct);}
+function setupAdminEvents(){ $('adminLoginBtn')?.addEventListener('click',()=>{if($('adminUser').value==='admin'&&$('adminPass').value==='admin'){sessionStorage.setItem('robo_admin_auth','1'); $('adminLogin').classList.add('hide'); $('adminPanel').classList.remove('hide'); renderAll();}else{$('adminLoginMsg').textContent='Invalid login';}}); if(sessionStorage.getItem('robo_admin_auth')==='1'){ $('adminLogin')?.classList.add('hide'); $('adminPanel')?.classList.remove('hide'); } $('signOutBtn')?.addEventListener('click',()=>{sessionStorage.removeItem('robo_admin_auth'); location.href='/';}); $('saveBtn')?.addEventListener('click',()=>{save(); alert('Changes saved');}); $('addProductBtn')?.addEventListener('click',addProduct);}
 
 function renderAll(){renderCategories();renderDeals();renderStoreProducts();updateCartUI();renderAdminProducts();renderPurchases();}
-function init(){load(); const isAdmin=location.pathname.startsWith('/admin') || new URLSearchParams(location.search).get('admin')==='1'; $('storefront').classList.toggle('hide',isAdmin); $('adminRoot').classList.toggle('hide',!isAdmin); setupStoreEvents(); setupAdminEvents(); renderAll();}
+async function init(){load(); const isAdmin=location.pathname.startsWith('/admin') || new URLSearchParams(location.search).get('admin')==='1'; $('storefront').classList.toggle('hide',isAdmin); $('adminRoot').classList.toggle('hide',!isAdmin); setupStoreEvents(); setupAdminEvents(); renderAll(); await pullRemoteState(); startRemoteSync();}
 init();
 </script>
 </body>
